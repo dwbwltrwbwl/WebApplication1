@@ -15,5 +15,6 @@ namespace WebApplication1.Data
         public DbSet<Role> roles { get; set; }
         public DbSet<Supplier> suppliers { get; set; }
         public DbSet<User> users { get; set; }
+        
     }
 }
