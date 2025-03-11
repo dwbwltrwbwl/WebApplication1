@@ -3,7 +3,7 @@ using WebApplication1.Models;
 
 namespace WebApplication1.Data
 {
-    public class ApplicationDbContext
+    public class ApplicationDbContext : DbContext
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
 
@@ -15,5 +15,6 @@ namespace WebApplication1.Data
         public DbSet<Role> roles { get; set; }
         public DbSet<Supplier> suppliers { get; set; }
         public DbSet<User> users { get; set; }
+    
     }
 }
