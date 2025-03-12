@@ -2,20 +2,20 @@
     ViewData["Title"] = "Вход";
 }
 
-<h2>Вход</h2>
+<h2 style="text-align: center; margin-bottom: 20px;">Вход</h2>
 
-<form asp-action="Login" method="post">
-    <div>
-        <label for="login">Логин</label>
-        <input type="text" name="login" required />
+<form asp-action="Login" method="post" style="max-width: 300px; margin: auto; padding: 20px; background: white; border-radius: 8px; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);">
+    <div style="margin-bottom: 15px;">
+        <label for="login" style="display: block; margin-bottom: 5px; font-weight: bold;">Логин</label>
+        <input type="text" name="login" required style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;" />
     </div>
-    <div>
-        <label for="password">Пароль</label>
-        <input type="password" name="password" required />
+    <div style="margin-bottom: 15px;">
+        <label for="password" style="display: block; margin-bottom: 5px; font-weight: bold;">Пароль</label>
+        <input type="password" name="password" required style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;" />
     </div>
-    <button type="submit">Войти</button>
+    <button type="submit" style="width: 100%; padding: 10px; background-color: #28a745; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 16px;">Войти</button>
 </form>
 
-<div>
-    <a asp-action="Register">Зарегистрироваться</a>
+<div style="text-align: center; margin-top: 20px;">
+    <a asp-action="Register" style="color: #007bff; text-decoration: none; font-weight: bold;">Зарегистрироваться</a>
 </div>
