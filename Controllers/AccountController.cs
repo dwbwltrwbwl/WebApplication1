@@ -21,14 +21,12 @@ public class AccountController : Controller
     {
         _context = context;
     }
-
     // GET: Account/Register
     public IActionResult Register()
     {
         ViewData["idRole"] = new SelectList(_context.roles, "idRole", "role");
         return View();
     }
-
     // POST: Account/Register
     [HttpPost]
     [ValidateAntiForgeryToken]
@@ -51,51 +49,39 @@ public class AccountController : Controller
             await _context.SaveChangesAsync();
             return RedirectToAction("Index", "Users");
         }
-
         ViewData["idRole"] = new SelectList(_context.roles, "idRole", "role", model.IdRole);
         return View(model);
     }
-
     // GET: Account/Login
     public IActionResult Login()
     {
         return View();
     }
-
     // POST: Account/Login
     [HttpPost]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Login(string login, string password)
     {
-        var user = await _context.users.FirstOrDefaultAsync(u => u.login == login && u.password == password); // Не забудьте хешировать пароль!
-
+        var user = await _context.users.FirstOrDefaultAsync(u => u.login == login && u.password == password);
         if (user != null)
         {
-            // Создаем Claims (утверждения) для пользователя
             var claims = new List<Claim>
             {
-                new Claim(ClaimTypes.Name, user.login), // Имя пользователя (можно использовать логин)
-                new Claim(ClaimTypes.Role, user.idRole.ToString()) // Роль пользователя (если есть)
+                new Claim(ClaimTypes.Name, user.login),
+                new Claim(ClaimTypes.Role, user.idRole.ToString())
             };
-
-            // Создаем Identity (личность) на основе Claims
             var claimsIdentity = new ClaimsIdentity(
                 claims, CookieAuthenticationDefaults.AuthenticationScheme);
-
-            // Создаем AuthenticationProperties (свойства аутентификации)
             var authProperties = new AuthenticationProperties
             {
-                // Можно указать параметры, такие как RememberMe
             };
-
             await HttpContext.SignInAsync(
-                "YourAppCookie",  //  Используйте схему, которую вы указали при добавлении Cookie
+                "YourAppCookie",
                 new ClaimsPrincipal(claimsIdentity),
                 authProperties);
 
             return RedirectToAction("Index", "Users");
         }
-
         ModelState.AddModelError("", "Неверный логин или пароль");
         return View();
     }

@@ -20,11 +20,55 @@ namespace WebApplication1.Controllers
         }
 
         // GET: Products
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string searchString, int? categoryId, int? firmId, int? supplierId)
         {
-            var applicationDbContext = _context.products.Include(p => p.Category).Include(p => p.Country_Manufacturer).Include(p => p.Firm).Include(p => p.Material).Include(p => p.Supplier);
-            return View(await applicationDbContext.ToListAsync());
+            // 1. Начинаем с базового запроса.  Важно чтобы был AsQueryable()
+            var products = _context.products
+                .Include(p => p.Category)
+                .Include(p => p.Country_Manufacturer)
+                .Include(p => p.Firm)
+                .Include(p => p.Material)
+                .Include(p => p.Supplier)
+                .AsQueryable();
+
+            // 2. Добавляем фильтры, если они переданы.
+
+            // Поиск по имени продукта
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                products = products.Where(p => p.productName.Contains(searchString));
+            }
+
+            // Фильтр по Category
+            if (categoryId != null)
+            {
+                products = products.Where(p => p.idCategory == categoryId);
+            }
+
+            // Фильтр по Firm
+            if (firmId != null)
+            {
+                products = products.Where(p => p.idFirm == firmId);
+            }
+
+            // Фильтр по Supplier
+            if (supplierId != null)
+            {
+                products = products.Where(p => p.idSupplier == supplierId);
+            }
+
+            // 3. Преобразуем в список и передаем в View
+            var applicationDbContext = await products.ToListAsync();
+
+            // 4. Передаем значения для фильтров в View, чтобы они отображались в форме.
+            ViewData["idCategory"] = new SelectList(_context.categories, "idCategory", "category", categoryId);
+            ViewData["idFirm"] = new SelectList(_context.firms, "idFirm", "firm", firmId);
+            ViewData["idSupplier"] = new SelectList(_context.suppliers, "idSupplier", "supplier", supplierId);
+            ViewData["searchString"] = searchString; // передаем строку поиска для отображения в поле поиска
+
+            return View(applicationDbContext);
         }
+
 
         // GET: Products/Details/5
         public async Task<IActionResult> Details(int? id)
