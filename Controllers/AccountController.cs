@@ -8,6 +8,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication;
+using System.Security.Claims;
 
 
 public class AccountController : Controller
@@ -40,7 +43,7 @@ public class AccountController : Controller
                 middleName = model.MiddleName,
                 email = model.Email,
                 login = model.Login,
-                password = model.Password, // Не забудьте хешировать пароль!
+                password = model.Password,
                 idRole = 2
             };
 
@@ -68,18 +71,42 @@ public class AccountController : Controller
 
         if (user != null)
         {
-            // Здесь вы можете установить куки или сессию для аутентификации
+            // Создаем Claims (утверждения) для пользователя
+            var claims = new List<Claim>
+            {
+                new Claim(ClaimTypes.Name, user.login), // Имя пользователя (можно использовать логин)
+                new Claim(ClaimTypes.Role, user.idRole.ToString()) // Роль пользователя (если есть)
+            };
+
+            // Создаем Identity (личность) на основе Claims
+            var claimsIdentity = new ClaimsIdentity(
+                claims, CookieAuthenticationDefaults.AuthenticationScheme);
+
+            // Создаем AuthenticationProperties (свойства аутентификации)
+            var authProperties = new AuthenticationProperties
+            {
+                // Можно указать параметры, такие как RememberMe
+            };
+
+            await HttpContext.SignInAsync(
+                "YourAppCookie",  //  Используйте схему, которую вы указали при добавлении Cookie
+                new ClaimsPrincipal(claimsIdentity),
+                authProperties);
+
             return RedirectToAction("Index", "Users");
         }
 
         ModelState.AddModelError("", "Неверный логин или пароль");
         return View();
     }
-
-    // GET: Account/Logout
-    public IActionResult Logout()
+    public async Task<IActionResult> Logout()
     {
-        // Здесь вы можете удалить куки или сессию
+        await HttpContext.SignOutAsync("YourAppCookie");
         return RedirectToAction("Index", "Home");
     }
+    public IActionResult Layout()
+    {
+        return View();
+    }
 }
+
