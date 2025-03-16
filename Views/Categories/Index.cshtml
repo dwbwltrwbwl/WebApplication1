@@ -4,10 +4,7 @@
     ViewData["Title"] = "Index";
 }
 
-<div class="d-flex justify-content-between align-items-center mb-3">
-    <h1 style="color: #94a728;">Категории</h1>
-    <a asp-action="Create" class="btn btn-success" style="font-weight: bold; background-color: #94a728; color: white;">Добавить</a>
-</div>
+<h1 style="color: #94a728;">Категории</h1>
 
 <table class="table">
     <thead></thead>
@@ -16,10 +13,6 @@
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.category)
-            </td>
-            <td style="text-align: right;">
-                <a asp-action="Edit" asp-route-id="@item.idCategory" style="color: #28a745;">Редактировать</a>
-                <a asp-action="Delete" asp-route-id="@item.idCategory" style="color: #28a745;">Удалить</a>
             </td>
         </tr>
 }

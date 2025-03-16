@@ -4,60 +4,31 @@
     ViewData["Title"] = "Delete";
 }
 
-<h1>Delete</h1>
+<h1 style="color: #94a728;">Удаление</h1>
+<h3 style="color: #94a728;">Вы уверены, что хотите это удалить?</h3>
 
-<h3>Are you sure you want to delete this?</h3>
 <div>
-    <h4>Product</h4>
     <hr />
     <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Category)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Category.category)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Firm)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Firm.firm)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Supplier)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Supplier.supplier)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Material)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Material.material)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Country_Manufacturer)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Country_Manufacturer.countryManufacturer)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.productName)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.productName)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Price)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Price)
-        </dd>
+        <dt class = "col-sm-2">Категория:</dt>
+        <dd class = "col-sm-10">@Html.DisplayFor(model => model.Category.category)</dd>
+        <dt class = "col-sm-2">Фирма:</dt>
+        <dd class = "col-sm-10">@Html.DisplayFor(model => model.Firm.firm)</dd>
+        <dt class = "col-sm-2">Поставщик:</dt>
+        <dd class = "col-sm-10">@Html.DisplayFor(model => model.Supplier.supplier)</dd>
+        <dt class = "col-sm-2">Материал:</dt>
+        <dd class = "col-sm-10">@Html.DisplayFor(model => model.Material.material)</dd>
+        <dt class = "col-sm-2">Страна:</dt>
+        <dd class = "col-sm-10">@Html.DisplayFor(model => model.Country_Manufacturer.countryManufacturer)</dd>
+        <dt class = "col-sm-2">Название:</dt>
+        <dd class = "col-sm-10">@Html.DisplayFor(model => model.productName)</dd>
+        <dt class = "col-sm-2">Цена:</dt>
+        <dd class = "col-sm-10">@Html.DisplayFor(model => model.Price)</dd>
     </dl>
     
     <form asp-action="Delete">
         <input type="hidden" asp-for="idProduct" />
-        <input type="submit" value="Delete" class="btn btn-danger" /> |
-        <a asp-action="Index">Back to List</a>
+        <input type="submit" value="Delete" class="btn btn-danger" style="font-weight: bold;"  />
+        <a asp-action="Index" class="btn btn-secondary" style="font-weight: bold; background-color: #94a728; color: white; margin-left: 15px;">Вернуться</a>
     </form>
 </div>
