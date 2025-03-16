@@ -6,10 +6,6 @@
 
 <h1 style="color: #94a728;">Продукты</h1>
 
-@* <p>
-    <a asp-action="Create">Create New</a>
-</p> *@
-
 <form asp-action="Index" method="get">
     <div class="form-group">
         <label for="searchString">Поиск по названию:</label>
@@ -31,55 +27,78 @@
         <label for="materialId">Материал:</label>
         @Html.DropDownList("materialId", (SelectList)ViewData["idMaterial"], "-", new { @class = "form-control" })
     </div>
-    <div class="form-group">
+    <div class="form-group" style="margin-bottom: 15px;">
         <label for="countryManufacturerId">Страна производителя:</label>
         @Html.DropDownList("countryManufacturerId", (SelectList)ViewData["idCountryManufacturer"], "-", new { @class = "form-control" })
     </div>
-    <button type="submit" class="btn btn-primary" style="font-weight: bold; background-color: #94a728; color: white;">Применить фильтрацию</button>
-    <a asp-action="Index" class="btn btn-secondary" style="font-weight: bold; background-color: #94a728; color: white;">Сбросить</a>
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <div>
+            <button type="submit" class="btn btn-primary" style="font-weight: bold; background-color: #94a728; color: white;">Применить</button>
+            <a asp-action="Index" class="btn btn-secondary" style="font-weight: bold; background-color: #94a728; color: white;">Сбросить</a>
+        </div>
+        @if (User.IsInRole("1"))
+        {
+            <a asp-action="Create" class="btn btn-success" style="font-weight: bold; background-color: #94a728; color: white;">Добавить</a>
+        }
+    </div>
 </form>
 
 <table class="table">
     <thead>
         <tr>
             <th style="color: #94a728;">Название продукта</th>
-            <th style="color: #94a728;">Цена</th>
+            <th style="color: #94a728;">
+                <a asp-action="Index"
+                asp-route-sortOrder="@ViewData["PriceSortParam"]"
+                asp-route-searchString="@Context.Request.Query["searchString"]"
+                asp-route-categoryId="@Context.Request.Query["categoryId"]"
+                asp-route-firmId="@Context.Request.Query["firmId"]"
+                asp-route-supplierId="@Context.Request.Query["supplierId"]"
+                asp-route-materialId="@Context.Request.Query["materialId"]"
+                asp-route-countryManufacturerId="@Context.Request.Query["countryManufacturerId"]"
+                style="color: #94a728;">
+                    Цена
+                    @if (ViewData["CurrentSort"] != null)
+                    {
+                        if (ViewData["CurrentSort"].ToString() == "price_asc")
+                        {
+                            <span>↑</span>
+                        }
+                        else if (ViewData["CurrentSort"].ToString() == "price_desc")
+                        {
+                            <span>↓</span>
+                        }
+                    }
+                </a>
+            </th>
             <th style="color: #94a728;">Категория</th>
             <th style="color: #94a728;">Фирма</th>
             <th style="color: #94a728;">Поставщик</th>
             <th style="color: #94a728;">Материал</th>
             <th style="color: #94a728;">Страна производителя</th>
-            <th></th>
+            <th style="color: #94a728;"></th>
         </tr>
     </thead>
     <tbody>
         @foreach (var item in Model)
         {
             <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.productName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Price)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Category.category)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Firm.firm)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Supplier.supplier)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Material.material)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Country_Manufacturer.countryManufacturer)
-                </td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.idProduct">Редактировать</a>
-                    <a asp-action="Delete" asp-route-id="@item.idProduct">Удалить</a>
+                <td>@Html.DisplayFor(modelItem => item.productName)</td>
+                <td>@Html.DisplayFor(modelItem => item.Price)</td>
+                <td>@Html.DisplayFor(modelItem => item.Category.category)</td>
+                <td>@Html.DisplayFor(modelItem => item.Firm.firm)</td>
+                <td>@Html.DisplayFor(modelItem => item.Supplier.supplier)</td>
+                <td>@Html.DisplayFor(modelItem => item.Material.material)</td>
+                <td>@Html.DisplayFor(modelItem => item.Country_Manufacturer.countryManufacturer)</td>
+                <td style="text-align: right;">
+                    @if (User.IsInRole("1"))
+                    {
+                        <a asp-action="Edit" asp-route-id="@item.idProduct" style="color: #28a745;">Редактировать</a>
+                    }
+                    @if (User.IsInRole("1"))
+                    {
+                        <a asp-action="Delete" asp-route-id="@item.idProduct" style="color: #28a745;">Удалить</a>
+                    }
                 </td>
             </tr>
         }

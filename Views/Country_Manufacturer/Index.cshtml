@@ -4,30 +4,22 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h1 style="color: #94a728;">Страны производителей</h1>
+    <a asp-action="Create" class="btn btn-success" style="font-weight: bold; background-color: #94a728; color: white;">Добавить</a>
+</div>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
 <table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.countryManufacturer)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
+    <thead></thead>
     <tbody>
 @foreach (var item in Model) {
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.countryManufacturer)
             </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.idCountryManufacturer">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.idCountryManufacturer">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.idCountryManufacturer">Delete</a>
+            <td style="text-align: right;">
+                <a asp-action="Edit" asp-route-id="@item.idCountryManufacturer" style="color: #28a745;">Редактировать</a>
+                <a asp-action="Delete" asp-route-id="@item.idCountryManufacturer" style="color: #28a745;">Удалить</a>
             </td>
         </tr>
 }

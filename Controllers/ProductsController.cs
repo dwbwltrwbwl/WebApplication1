@@ -20,8 +20,11 @@ namespace WebApplication1.Controllers
         }
 
         // GET: Products
-        public async Task<IActionResult> Index(string searchString, int? categoryId, int? firmId, int? supplierId, int? materialId, int? countryManufacturerId)
+        public async Task<IActionResult> Index(string searchString, int? categoryId, int? firmId, int? supplierId, int? materialId, int? countryManufacturerId, string sortOrder)
         {
+            ViewData["CurrentSort"] = sortOrder;
+            ViewData["PriceSortParam"] = sortOrder == "price_asc" ? "price_desc" : "price_asc";
+
             var products = _context.products
                 .Include(p => p.Category)
                 .Include(p => p.Country_Manufacturer)
@@ -55,6 +58,18 @@ namespace WebApplication1.Controllers
                 products = products.Where(p => p.idCountryManufacturer == countryManufacturerId);
             }
 
+            switch (sortOrder)
+            {
+                case "price_asc":
+                    products = products.OrderBy(p => p.Price);
+                    break;
+                case "price_desc":
+                    products = products.OrderByDescending(p => p.Price);
+                    break;
+                default:
+                    break;
+            }
+
             var applicationDbContext = await products.ToListAsync();
             ViewData["idCategory"] = new SelectList(_context.categories, "idCategory", "category", categoryId);
             ViewData["idFirm"] = new SelectList(_context.firms, "idFirm", "firm", firmId);
@@ -63,7 +78,7 @@ namespace WebApplication1.Controllers
             ViewData["idCountryManufacturer"] = new SelectList(_context.country_Manufacturers, "idCountryManufacturer", "countryManufacturer", countryManufacturerId);
             ViewData["searchString"] = searchString;
 
-            return View(applicationDbContext);
+            return View(await products.ToListAsync());
         }
 
 
