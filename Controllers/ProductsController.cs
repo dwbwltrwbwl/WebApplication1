@@ -24,7 +24,7 @@ namespace WebApplication1.Controllers
         {
             ViewData["CurrentSort"] = sortOrder;
             ViewData["PriceSortParam"] = sortOrder == "price_asc" ? "price_desc" : "price_asc";
-
+            ViewData["NameSortParam"] = sortOrder == "name_asc" ? "name_desc" : "name_asc";
             var products = _context.products
                 .Include(p => p.Category)
                 .Include(p => p.Country_Manufacturer)
@@ -65,6 +65,12 @@ namespace WebApplication1.Controllers
                     break;
                 case "price_desc":
                     products = products.OrderByDescending(p => p.Price);
+                    break;
+                case "name_asc":
+                    products = products.OrderBy(p => p.productName);
+                    break;
+                case "name_desc":
+                    products = products.OrderByDescending(p => p.productName);
                     break;
                 default:
                     break;

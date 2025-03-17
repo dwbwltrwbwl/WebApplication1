@@ -80,7 +80,7 @@ public class AccountController : Controller
                 new ClaimsPrincipal(claimsIdentity),
                 authProperties);
 
-            return RedirectToAction("Index", "Users");
+            return RedirectToAction("Index", "Products");
         }
         ModelState.AddModelError("", "Неверный логин или пароль");
         return View();

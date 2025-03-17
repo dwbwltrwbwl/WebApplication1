@@ -46,7 +46,30 @@
 <table class="table">
     <thead>
         <tr>
-            <th style="color: #94a728;">Название продукта</th>
+            <th style="color: #94a728;">
+                <a asp-action="Index"
+                   asp-route-sortOrder="@ViewData["NameSortParam"]"
+                   asp-route-searchString="@Context.Request.Query["searchString"]"
+                   asp-route-categoryId="@Context.Request.Query["categoryId"]"
+                   asp-route-firmId="@Context.Request.Query["firmId"]"
+                   asp-route-supplierId="@Context.Request.Query["supplierId"]"
+                   asp-route-materialId="@Context.Request.Query["materialId"]"
+                   asp-route-countryManufacturerId="@Context.Request.Query["countryManufacturerId"]"
+                   style="color: #94a728;">
+                    Название продукта
+                    @if (ViewData["CurrentSort"] != null)
+                    {
+                        if (ViewData["CurrentSort"].ToString() == "name_asc")
+                        {
+                            <span>↑</span>
+                        }
+                        else if (ViewData["CurrentSort"].ToString() == "name_desc")
+                        {
+                            <span>↓</span>
+                        }
+                    }
+                </a>
+            </th>
             <th style="color: #94a728;">
                 <a asp-action="Index"
                 asp-route-sortOrder="@ViewData["PriceSortParam"]"
