@@ -34,6 +34,12 @@ public class AccountController : Controller
     {
         if (ModelState.IsValid)
         {
+            if (!IsStrongPassword(model.Password))
+            {
+                ModelState.AddModelError("Password", "Пароль должен содержать не менее 6 символов, одну заглавную букву, одну строчную букву, одну цифру и один специальный символ.");
+                ViewData["idRole"] = new SelectList(_context.roles, "idRole", "role", model.IdRole);
+                return View(model);
+            }
             var user = new User
             {
                 lastName = model.LastName,
@@ -44,10 +50,9 @@ public class AccountController : Controller
                 password = model.Password,
                 idRole = 2
             };
-
             _context.users.Add(user);
             await _context.SaveChangesAsync();
-            return RedirectToAction("Index", "Users");
+            return RedirectToAction("Index", "Home");
         }
         ViewData["idRole"] = new SelectList(_context.roles, "idRole", "role", model.IdRole);
         return View(model);
@@ -93,6 +98,14 @@ public class AccountController : Controller
     public IActionResult Layout()
     {
         return View();
+    }
+    private bool IsStrongPassword(string password)
+    {
+        return password.Length >= 6 &&
+               password.Any(char.IsUpper) &&
+               password.Any(char.IsLower) &&
+               password.Any(char.IsDigit) &&
+               password.Any(ch => !char.IsLetterOrDigit(ch));
     }
 }
 
