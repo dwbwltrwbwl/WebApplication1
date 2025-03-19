@@ -30,9 +30,11 @@ namespace WebApplication1.Models
         public Country_Manufacturer? Country_Manufacturer { get; set; }
 
         [Required]
-        [StringLength(50)]
+        [StringLength(50, ErrorMessage = "Название не может превышать 50 символов.")]
         public string? productName { get; set; }
 
+        [Required]
+        [Range(0.01, 100000.00, ErrorMessage = "Цена должна быть в диапазоне от 0.01 до 100000.00.")]
         public decimal Price { get; set; }
     }
 }
