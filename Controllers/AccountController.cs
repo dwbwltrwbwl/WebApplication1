@@ -34,6 +34,13 @@ public class AccountController : Controller
     {
         if (ModelState.IsValid)
         {
+            var existingUser = await _context.users.FirstOrDefaultAsync(u => u.login == model.Login);
+            if (existingUser != null)
+            {
+                ModelState.AddModelError("Login", "Этот логин уже занят. Пожалуйста, выберите другой.");
+                ViewData["idRole"] = new SelectList(_context.roles, "idRole", "role", model.IdRole);
+                return View(model);
+            }
             if (!IsStrongPassword(model.Password))
             {
                 ModelState.AddModelError("Password", "Пароль должен содержать не менее 6 символов, одну заглавную букву, одну строчную букву, одну цифру и один специальный символ.");

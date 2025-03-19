@@ -32,6 +32,24 @@ namespace WebApplication1.Controllers
                 .Include(p => p.Material)
                 .Include(p => p.Supplier)
                 .AsQueryable();
+            //foreach (var product in products)
+            //{
+            //    switch (product.Category.category.ToLower())
+            //    {
+            //        case "холодильник":
+            //            product.ImagePath = "/images/fridge.jpg";
+            //            break;
+            //        case "фен":
+            //            product.ImagePath = "/images/hairDryer.jpg";
+            //            break;
+            //        case "пылесос":
+            //            product.ImagePath = "/images/cleaner.jpg";
+            //            break;
+            //        default:
+            //            product.ImagePath = "/images/default.jpg";
+            //            break;
+            //    }
+            //}
 
             if (!string.IsNullOrEmpty(searchString))
             {

@@ -2,7 +2,7 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
+<div class="text-center" style="max-width: 1200px; margin: auto; padding: 0 20px;">
     <h1 style="color: #94a728; text-align: center;">Каталог магазина бытовой техники</h1>
     <div style="display: flex; justify-content: center; margin-top: 20px;">
         <img src="~/images/magazin.jfif" alt="Welcome Image" style="width: 600px; height: auto; margin: 0 10px; border-radius: 15px; border: 2px solid #94a728;" />
@@ -38,12 +38,32 @@
             <span style="margin-top: 5px; font-weight: 550; color: #28a745;">Доставок на сегодня</span>
         </div>
 
-        <div style="margin: 0 45px; display: flex; flex-direction: column; align-items: center;">
+        <div style="margin: 0 0; display: flex; flex-direction: column; align-items: center;">
             <div style="width: 70px; height: 70px; background-color: #94a728; border-radius: 15px; display: flex; align-items: center; justify-content: center;">
                 <span style="font-weight: bold; color: white; font-size: 25px;">25%</span>
             </div>
             <span style="margin-top: 5px; font-weight: 550; color: #28a745;">Индивидуальные скидки</span>
         </div>
+    </div>
+
+    <div style="display: flex; justify-content: center; margin-top: 20px;">
+        <img src="~/images/family.jfif" alt="Welcome Image" style="width: 600px; height: auto; margin: 0 10px; border-radius: 15px; border: 2px solid #94a728;" />
+    </div>
+    <ul class="navbar-nav flex-grow-1" style="margin-top: 20px;">
+        <li class="nav-item">
+            <a class="nav-link text-dark" href="#" onclick="event.preventDefault(); showLoginModal();" style="font-weight: bold; color: #94a728 !important; padding: 5px 10px; border-radius: 5px; display: inline-block; margin-right: 10px;">Доставка</a>
+            <a class="nav-link text-dark" href="#" onclick="event.preventDefault(); showLoginModal();" style="font-weight: bold; color: #94a728 !important; padding: 5px 10px; border-radius: 5px; display: inline-block; margin-right: 10px;">Контакты</a>
+            <a class="nav-link text-dark" href="#" onclick="event.preventDefault(); showLoginModal();" style="font-weight: bold; color: #94a728 !important; padding: 5px 10px; border-radius: 5px; display: inline-block; margin-right: 10px;">Магазины</a>
+            <a class="nav-link text-dark" href="#" onclick="event.preventDefault(); showLoginModal();" style="font-weight: bold; color: #94a728 !important; padding: 5px 10px; border-radius: 5px; display: inline-block; margin-right: 10px;">Акции</a>
+            <a class="nav-link text-dark" href="#" onclick="event.preventDefault(); showLoginModal();" style="font-weight: bold; color: #94a728 !important; padding: 5px 10px; border-radius: 5px; display: inline-block; margin-right: 10px;">Оплата</a>
+            <a class="nav-link text-dark" href="#" onclick="event.preventDefault(); showLoginModal();" style="font-weight: bold; color: #94a728 !important; padding: 5px 10px; border-radius: 5px; display: inline-block; margin-right: 10px;">Наши магазины</a>
+            <a class="nav-link text-dark" href="#" onclick="event.preventDefault(); showLoginModal();" style="font-weight: bold; color: #94a728 !important; padding: 5px 10px; border-radius: 5px; display: inline-block; margin-right: 10px;">Обмен и возврат</a>
+        </li>
+    </ul>
+
+    <div style="margin-top: 20px; padding: 10px; background-color: #d3d3d3; border-radius: 10px; text-align: left;">
+        <p style="margin: 5px 0;">Интернет-магазин: +7 (812) 999-99-99</p>
+        <p style="margin: 5px 0;">Email: krutoimagaz@mail.ru</p>
     </div>
 
 </div>
